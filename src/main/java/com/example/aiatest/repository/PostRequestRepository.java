@@ -11,4 +11,6 @@ public interface PostRequestRepository extends JpaRepository<PostRequest, Long> 
     Optional<PostRequest> findFirstByTagsAndTagMode(String tags, TagMode tagMode);
 
     Optional<PostRequest> findFirstByUpdatedDateBeforeOrderByUpdatedDateAsc(OffsetDateTime updatedDate);
+
+    void deleteAllByCreatedDateBefore(OffsetDateTime createdDate);
 }

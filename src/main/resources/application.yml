@@ -25,3 +25,16 @@ org:
   jobrunr:
     background-job-server:
       enabled: true
+
+post:
+  existing-request-before: 15
+  recurring-job:
+    fetch-feeds-and-save-post:
+      interval: PT2M
+      minus-minutes: 10
+    get-past-requests-and-delete:
+      cron: 0 01 0 * * *
+      minus-days: 1
+    get-posts-and-delete:
+      cron: 0 01 0 * * *
+      minus-days: 1

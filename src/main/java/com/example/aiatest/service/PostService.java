@@ -1,5 +1,6 @@
 package com.example.aiatest.service;
 
+import com.example.aiatest.config.PostConfig;
 import com.example.aiatest.model.constant.PostSortField;
 import com.example.aiatest.model.constant.SortDirection;
 import com.example.aiatest.model.dto.PostDto;
@@ -34,13 +35,16 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostRequestRepository postRequestRepository;
 
-    @Recurring(id = "recurring-get-feeds-and-save-posts-job", interval = "PT1M")
-    @Job(name = "Get Feeds and Save Posts Job")
+    private final PostConfig config;
+
+    @Recurring(id = "recurring-fetch-feeds-and-save-posts-job", interval = "${post.recurring-job.fetch-feeds-and-save-post.interval}")
+    @Job(name = "Fetch Feeds and Save Posts Job")
     @Transactional
-    public void getFeedsAndSavePostsJob() {
-        // get past request that is being called at least 15 minutes ago
+    public void fetchFeedsAndSavePostsJob() {
+        // get past request that is being called at least x minutes ago
         Optional<PostRequest> postRequestOptional = postRequestRepository
-                .findFirstByUpdatedDateBeforeOrderByUpdatedDateAsc(now().minusMinutes(15));
+                .findFirstByUpdatedDateBeforeOrderByUpdatedDateAsc(now()
+                        .minusMinutes(config.getRecurringJob().getFetchFeedsAndSavePost().getMinusMinutes()));
 
         if (postRequestOptional.isPresent()) {
             PostRequest postRequest = postRequestOptional.get();
@@ -50,11 +54,30 @@ public class PostService {
 
             getAndSaveFeeds(List.of(postRequest.getTags().split(",")), postRequest.getTagMode(), postRequest);
 
-            log.info("\"Get Feeds and Save Posts Job\" is DONE!");
+            log.info("\"Fetch Feeds and Save Posts Job\" is DONE!");
             return;
         }
 
-        log.info("[\"Get Feeds and Save Posts Job\"]: No request that is being called at least 15 minutes ago");
+        log.info("[\"Fetch Feeds and Save Posts Job\"]: No request that was being called at least {} minutes ago",
+                config.getRecurringJob().getFetchFeedsAndSavePost().getMinusMinutes());
+    }
+
+    @Recurring(id = "recurring-get-past-requests-and-delete-job", cron = "${post.recurring-job.get-past-requests-and-delete.cron}")
+    @Job(name = "Get Past Requests And Delete Job")
+    @Transactional
+    public void getPastRequestsAndDeleteJob() {
+        postRequestRepository.deleteAllByCreatedDateBefore(now()
+                .minusDays(config.getRecurringJob().getGetPastRequestsAndDelete().getMinusDays()));
+        log.info("\"Get Past Requests And Delete Job\" is DONE!");
+    }
+
+    @Recurring(id = "recurring-get-posts-and-delete-job", cron = "${post.recurring-job.get-posts-and-delete.cron}")
+    @Job(name = "Get Posts And Delete Job")
+    @Transactional
+    public void getPostsAndDeleteJob() {
+        postRepository.deleteAllByCreatedDateBefore(now()
+                .minusDays(config.getRecurringJob().getGetPostsAndDelete().getMinusDays()));
+        log.info("\"Get Posts And Delete\" Job is DONE!");
     }
 
     @Transactional
@@ -89,17 +112,17 @@ public class PostService {
         // find existing request that has same query parameters
         Optional<PostRequest> existingRequestOpt = postRequestRepository.findFirstByTagsAndTagMode(String.join(",", tags), tagMode);
 
-        // if the request is present then check if it is longer than 15 minutes ago
+        // if the request is present then check if it is longer than x minutes ago
         // if the request is not present then fetch new feeds
         if (existingRequestOpt.isPresent()) {
             PostRequest existingRequest = existingRequestOpt.get();
 
-            // if the request is longer than 15 minutes ago then fetch new feeds
-            if (existingRequest.getUpdatedDate().isBefore(now().minusMinutes(15))) {
-                log.info("existing request is longer than 15 minutes ago");
+            // if the request is longer than x minutes ago then fetch new feeds
+            if (existingRequest.getUpdatedDate().isBefore(now().minusMinutes(config.getExistingRequestBefore()))) {
+                log.info("existing request is longer than {} minutes ago", config.getExistingRequestBefore());
                 getAndSaveFeeds(tags, tagMode, existingRequest);
             } else {
-                log.info("existing request is shorter than 15 minutes ago");
+                log.info("existing request is shorter than {} minutes ago", config.getExistingRequestBefore());
             }
         } else {
             log.info("there is no existing request with similar query");

@@ -22,3 +22,16 @@ org:
       enabled: true
     background-job-server:
       worker-count: 2
+
+post:
+  existing-request-before: 5
+  recurring-job:
+    fetch-feeds-and-save-post:
+      interval: PT1M
+      minus-minutes: 5
+    get-past-requests-and-delete:
+      cron: 0 15 4 * * *
+      minus-days: 1
+    get-posts-and-delete:
+      cron: 0 15 4 * * *
+      minus-days: 1
