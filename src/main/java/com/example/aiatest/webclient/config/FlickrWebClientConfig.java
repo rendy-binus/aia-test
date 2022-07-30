@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class FlickrWebClientConfig {
     @NotBlank
-    private String url;
+    private String url = "https://www.flickr.com/services/";
 
     private Services services;
 
@@ -21,6 +21,6 @@ public class FlickrWebClientConfig {
     @Setter
     public static class Services {
         @NotBlank
-        private String publicFeeds;
+        private String publicFeeds = "feeds/photos_public.gne";
     }
 }
