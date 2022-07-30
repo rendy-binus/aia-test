@@ -20,3 +20,5 @@ org:
   jobrunr:
     dashboard:
       enabled: true
+    background-job-server:
+      worker-count: 2

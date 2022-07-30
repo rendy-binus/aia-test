@@ -22,6 +22,7 @@ public class PostMapper {
         items.forEach(item -> {
             posts.add(Post.builder()
                     .title(item.getTitle())
+                    .link(item.getLink())
                     .media(Media.builder()
                             .url(item.getMedia().getM())
                             .build())

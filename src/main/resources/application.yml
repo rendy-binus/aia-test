@@ -6,6 +6,10 @@ spring:
     hibernate:
       naming:
         physical-strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 10
 
 server:
   servlet:

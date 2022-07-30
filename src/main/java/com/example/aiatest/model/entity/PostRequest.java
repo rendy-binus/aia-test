@@ -8,6 +8,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"tags", "tagMode"})
+)
 @Getter
 @Setter
 @ToString
@@ -15,7 +18,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @SuperBuilder
 public class PostRequest extends BaseEntity {
-    @Column(unique = true)
     private String tags;
 
     @Enumerated(EnumType.STRING)

@@ -21,6 +21,9 @@ import java.util.*;
 public class Post extends BaseEntity {
     private String title;
 
+    @Column(unique = true)
+    private String link;
+
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private Media media;
@@ -48,6 +51,7 @@ public class Post extends BaseEntity {
         Post post = (Post) o;
         return Objects.equals(getId(), post.getId()) &&
                 Objects.equals(getTitle(), post.getTitle()) &&
+                Objects.equals(getLink(), post.getLink()) &&
                 Objects.equals(getMedia(), post.getMedia()) &&
                 Objects.equals(getDateTaken(), post.getDateTaken()) &&
                 Objects.equals(getPublished(), post.getPublished()) &&
