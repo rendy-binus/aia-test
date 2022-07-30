@@ -34,7 +34,7 @@
 | tagMode       |    No     |      ANY      | TagMode[ALL = all tags has to be present, ANY = any available tag] |
 | tags          |    No     | empty string  | comma separated values                                             |
 | page          |    No     |       0       | page number with starting value of 0                               |
-| size          |    No     |       5       | maximum element in a page, minimum = 5, maximum 50                 |
+| size          |    No     |       5       | maximum element in a page, minimum = 5, maximum = 50               |
 | sortBy        |    No     |   PUBLISHED   | PostSortField[TITLE, DATE_TAKEN, PUBLISHED]                        |
 | sortDirection |    No     |      ASC      | ASC, DESC                                                          |
 
@@ -62,43 +62,37 @@
     <td>Flickr Public Feeds API Path</td>
   </tr>
   <tr>
-    <td>post</td>
+    <td rowspan="7">post</td>
     <td>existing-request-before</td>
     <td>5</td>
     <td>POST_REQUEST.updated_date before x (in minutes)<br>minimum = 5, maximum = 60</td>
   </tr>
   <tr>
-    <td></td>
     <td>recurring-job.fetch-feeds-and-save-post.interval</td>
     <td>PT1M</td>
     <td>Fetch Feeds and Save Post Recurring Job interval.<br>The format for the string to be parsed is "PnDTnHnMn.nS" where "nDT" means 'n' number of Days,<br>"nH" means 'n' number of Hours, "nM" means 'n' number of Minutes and "nS" means 'n' number of Seconds.<br>The format accepted are based on the ISO-8601 duration format.</td>
   </tr>
   <tr>
-    <td></td>
     <td>recurring-job.fetch-feeds-and-save-post.minus-minutes</td>
     <td>15</td>
     <td>Fetch Feeds and Save Post Recurring Job to query POST_REQUEST.updated_date &lt; now() - x minutes</td>
   </tr>
   <tr>
-    <td></td>
     <td>recurring-job.get-past-requests-and-delete.cron</td>
     <td>30 01 0 * * *</td>
     <td>Get Past Requests And Delete Recurring Job cron expression.<br>The cron expression is made of five fields. The following explains the values.<br><br>first * : second (0 - 59)<br>second * : minute (0 - 59)<br>third * : hour (0 - 23)<br>fourth * : day of the month (1 - 31)<br>fifth * : month (1 - 12)<br>sixth * : day of the week (0 - 6)</td>
   </tr>
   <tr>
-    <td></td>
     <td>recurring-job.get-past-requests-and-delete.minus-days</td>
     <td>1</td>
     <td>Get Past Requests And Delete Recurring Job to delete POST_REQUEST by created_date before now() - x days</td>
   </tr>
   <tr>
-    <td></td>
     <td>recurring-job.get-posts-and-delete.cron</td>
     <td>30 01 0 * * *</td>
     <td>Get Posts And Delete Recurring Job cron expression.</td>
   </tr>
   <tr>
-    <td></td>
     <td>recurring-job.get-posts-and-delete.minus-days</td>
     <td>1</td>
     <td>Get Posts And Delete Recurring Job to delete POST by created_date before now() - x days</td>
