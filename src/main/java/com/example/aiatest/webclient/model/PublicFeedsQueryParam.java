@@ -37,7 +37,7 @@ public class PublicFeedsQueryParam {
             params.put("ids", this.ids);
         }
         if (!this.tags.isEmpty()) {
-            params.put("tags", this.tags);
+            params.put("tags", Collections.singletonList(String.join(",", this.tags)));
         }
 //        params.put("tagmode", Optional.ofNullable(this.tagmode).orElse(TagMode.ALL).name());
 //        params.put("format", Optional.ofNullable(this.format).orElse(Format.JSON).getValue());

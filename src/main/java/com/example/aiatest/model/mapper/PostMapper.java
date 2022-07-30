@@ -1,7 +1,7 @@
 package com.example.aiatest.model.mapper;
 
 import com.example.aiatest.model.Media;
-import com.example.aiatest.model.dto.post.PostDto;
+import com.example.aiatest.model.dto.PostDto;
 import com.example.aiatest.model.entity.Post;
 import com.example.aiatest.webclient.model.Item;
 import com.example.aiatest.webclient.model.PublicFeeds;

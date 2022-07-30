@@ -1,5 +1,6 @@
 package com.example.aiatest.service;
 
+import com.example.aiatest.model.dto.PostDto;
 import com.example.aiatest.model.entity.Post;
 import com.example.aiatest.model.mapper.PostMapper;
 import com.example.aiatest.webclient.FlickrWebClient;
@@ -41,5 +42,9 @@ public class PostService {
         }
 
         return posts;
+    }
+
+    public List<PostDto> getPostsDto(List<String> tags, TagMode tagMode) {
+        return postMapper.toDto(getPosts(tags, tagMode));
     }
 }

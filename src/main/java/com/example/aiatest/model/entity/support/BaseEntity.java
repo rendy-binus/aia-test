@@ -18,13 +18,11 @@ import java.time.OffsetDateTime;
 })
 @MappedSuperclass
 public abstract class BaseEntity {
+    @CreationTimestamp
+    OffsetDateTime createdDate;
+    @UpdateTimestamp
+    OffsetDateTime updatedDate;
     @Id
     @GeneratedValue
     private Long id;
-
-    @CreationTimestamp
-    OffsetDateTime createdDate;
-
-    @UpdateTimestamp
-    OffsetDateTime updatedDate;
 }
