@@ -30,21 +30,23 @@ public class PostControllerTest {
     PostService postService;
 
     static Stream<Arguments> getValidQueryParams() {
-        return Stream.of(Arguments.of("design", "ALL", "title", "asc"),
-                Arguments.of("design,culture", "all", null, "DESC"),
-                Arguments.of("Politics,Health", null, "DATE_taken", "Asc"),
-                Arguments.of("SCIENCE", null, null, null),
-                Arguments.of(null, null, null, null)
+        return Stream.of(Arguments.of("design", "ALL", "1", "50", "title", "asc"),
+                Arguments.of("design,culture", "all", "2", "25", null, "DESC"),
+                Arguments.of("Politics,Health", null, "10", "5", "DATE_taken", "Asc"),
+                Arguments.of("null", null, "1", "10", null, null),
+                Arguments.of(null, null, "1", "25", null, null)
         );
     }
 
     @DisplayName("All Valid Query Params")
     @ParameterizedTest(name = "[{index}] - {arguments}")
     @MethodSource("getValidQueryParams")
-    void whenAllValid_thenShouldReturnOK(String tags, String tagMode, String sortBy, String sortDirection) throws Exception {
+    void whenAllValid_thenShouldReturnOK(String tags, String tagMode, String page, String size, String sortBy, String sortDirection) throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("tags", tags);
         queryParams.add("tagMode", tagMode);
+        queryParams.add("page", page);
+        queryParams.add("size", size);
         queryParams.add("sortBy", sortBy);
         queryParams.add("sortDirection", sortDirection);
 

@@ -1,9 +1,10 @@
 package com.example.aiatest.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Media {
     private String small;
     private String medium;

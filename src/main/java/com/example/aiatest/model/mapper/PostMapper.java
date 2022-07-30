@@ -5,6 +5,7 @@ import com.example.aiatest.model.dto.PostDto;
 import com.example.aiatest.model.entity.Post;
 import com.example.aiatest.webclient.model.Item;
 import com.example.aiatest.webclient.model.PublicFeeds;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -55,5 +56,9 @@ public class PostMapper {
         posts.forEach(post -> dtoList.add(toDto(post)));
 
         return dtoList;
+    }
+
+    public Page<PostDto> toDto(Page<Post> postPage) {
+        return postPage.map(this::toDto);
     }
 }

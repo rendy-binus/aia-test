@@ -7,6 +7,8 @@ import com.example.aiatest.webclient.model.TagMode;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +22,13 @@ public class PostRequest implements Serializable {
 
     @ValueOfEnum(enumClass = TagMode.class, message = "{validation.post.tagMode.message}")
     private String tagMode = TagMode.ANY.name();
+
+    @Min(0)
+    private int page = 0;
+
+    @Min(5)
+    @Max(50)
+    private int size = 5;
 
     @ValueOfEnum(enumClass = PostSortField.class, message = "{validation.post.sortBy.message}")
     private String sortBy = PostSortField.PUBLISHED.name();
