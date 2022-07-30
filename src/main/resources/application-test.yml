@@ -1,0 +1,12 @@
+logging:
+  level:
+    root: info
+    com.example.aiatest: debug
+    org.springframework.web.client.RestTemplate: debug
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.jobrunr.spring.autoconfigure.JobRunrAutoConfiguration
+      - org.jobrunr.spring.autoconfigure.metrics.JobRunrMetricsAutoConfiguration
+      - org.jobrunr.spring.autoconfigure.storage.JobRunrSqlStorageAutoConfiguration

@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: @spring.profiles.active@
+
+server:
+  servlet:
+    context-path: /api/v1
+
+web-client:
+  flickr:
+    url: https://www.flickr.com/services/
+    services:
+      public-feeds: feeds/photos_public.gne
+
+org:
+  jobrunr:
+    background-job-server:
+      enabled: true
